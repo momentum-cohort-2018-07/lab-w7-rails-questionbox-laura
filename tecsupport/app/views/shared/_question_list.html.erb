@@ -2,10 +2,11 @@
   <div class="container">
     <div class="my-3 p-3 bg-light">
       <h6 class="border-bottom border-info pb-2 mb-0">Questions</h6>
+      
       <%= paginate @questions %>
       <%= page_entries_info @questions %>
+     
       <% questions.each do |question| %>
-        <%# <div class="media text-muted pt-3"> %>
            <div class="d-flex flex-column mx-5 h-100">
                <p class="media-body mb-0 border-bottom border-info">
                
@@ -23,15 +24,6 @@
               <% end %>
             by <%= link_to "" + User.find(question.user_id).username, User.find(question.user_id), :style => 'font-size:.75rem' %>
             </small>
-            
-          <%# <div class="d-flex justify-content-center align-items-center flex-column align-center ml-3"> %>
-            <%# <% if current_user && (current_user.id == question.user_id || current_user.id == 1) %>
-              <%# <%= link_to '<i class="fas fa-trash text-danger"></i>'.html_safe, question, method: :delete, data: {confirm: 'Are you sure?'} %>
-              <%# <br> %>
-              <%# <%= link_to '<i class="fas fa-pen"></i>'.html_safe, edit_question_path(question) %>
-            <%# <% end %> 
-            <%# <% else %> 
-              <%# <span class='text-gray-dark mt-3'><%= question.score %></span>
             <% end %>
           </div>
           </div>

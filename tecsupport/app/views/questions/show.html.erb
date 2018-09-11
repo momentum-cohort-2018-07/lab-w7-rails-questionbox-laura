@@ -7,7 +7,7 @@
     <% else %>
       <%= link_to 'New Question', new_question_path, :class => 'btn text-info btn-light' %>
       <%= link_to "Log Out", session_path, method: :delete, :class => 'btn btn-outline-light' %>
-      <%= link_to "" + current_user.username, current_user, :class => 'btn btn-outline-light' %>
+      <%= link_to current_user.username, current_user, :class => 'btn btn-outline-light' %>
     <% end %>
   </div>
 </nav>
@@ -27,17 +27,9 @@
             &nbsp;<i class="fas fa-sort-up" aria-hidden="true"></i>
           <% end %>
           <br>
-  
-        <% end %>
-      <% elsif current_user %>
-        <%= link_to '<i class="fas fa-sort-up text-info"></i>'.html_safe, upvote_path(Upvote.where('user_id=?', current_user.id).where('question_id=?', @question.id)[0]), method: :delete %>
-        <span class='text-info'><%= @question.score %></span>
-      <% else %>
-        <span class='text-gray-dark mt-3'><%= @question.score %></span>
-      <% end %>
     </div>
     <p class="media-body mb-0 small lh-125 border-bottom border-info">
-      <%# <strong class="d-block text-gray-dark"><a href=<%= @question.link %>><%= @question.title %></a></strong>
+    <%= @question.title %></a></strong>
       <%= @question.body %>
       <br>
       <small class="text-muted text-center">questioned
@@ -61,7 +53,6 @@
     </div>
     </p>
   </div>
-</div>
 
 <h2 class='ml-3'>Answers</h2>
 
@@ -75,11 +66,14 @@
 
     <%= form.hidden_field :user_id, :value => current_user.id %>
     <%= form.hidden_field :question_id, :value => @question.id %>
-
+<% if @question.image.attached? %>
+<p>
+  <strong>Tec Image:</strong>
+    <%= image_tag @attached.image %>
+</p>
+<% end %>
     <div class="actions">
       <%= form.submit :class => "btn btn-info btn-block" %>
     </div>
   <% end %>
-
-<% end %>
-  </div>
+  <% end %>
