@@ -9,7 +9,7 @@ class AnswersController < ApplicationController
     
     def create 
       @answer = Answer.new(answer_params) 
-  
+      byebug
       if @answer.save
         redirect_to questions_path, notice: 'answer was successfully launched.'
       else
