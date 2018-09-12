@@ -3,17 +3,17 @@ class AnswersController < ApplicationController
   
 
     def new 
-      redirect_to post_path, notice: 'You must be logged in to answer' if !(current_user)
+      redirect_to questions_path, notice: 'You must be logged in to answer' if !(current_user)
       @answer = Answer.new 
     end 
     
     def create 
-      @answer = answer.new(answer_params) 
+      @answer = Answer.new(answer_params) 
   
       if @answer.save
-        redirect_to @answer.post, notice: 'answer was successfully launched.'
+        redirect_to questions_path, notice: 'answer was successfully launched.'
       else
-        render :new 
+        redirect_to  questions_path, notice: 'answer not successfully launched.'
       end
     end
   
@@ -24,7 +24,7 @@ class AnswersController < ApplicationController
     def update 
   
       if @answer.update(answer_params)
-        redirect_to post_path, notice: 'answer was successfully updated.'
+        redirect_to questions_path, notice: 'answer was successfully updated.'
       else
         render :edit
       end
@@ -33,7 +33,7 @@ class AnswersController < ApplicationController
     def destroy 
       @answer.destroy
       respond_to do |format|
-        format.html { redirect_to post_path, notice: 'answer was successfully destructed.' }
+        format.html { redirect_to questions_path, notice: 'answer was successfully destructed.' }
       end
     end   
   
@@ -45,7 +45,7 @@ class AnswersController < ApplicationController
   end
   
   def answer_params
-    params.permit(:post_id, :user_id, :answer)
+    params.permit(:user_id, :body)
   end
   
   end

@@ -16,66 +16,66 @@
   <p class="alert alert-success mt-4" role="alert"><%= notice %></p>
 <% end %>
 
-<div class='mt-5'>
-  <div class="media text-muted pt-3">
-    <div class="d-flex justify-content-center align-items-center flex-column align-center text-center mx-3">
-      <% if current_user %>
-        <%= form_with(url: questions_path, local: true) do |f| %>
-          <%= f.hidden_field :user_id, value: current_user.id %>
-          <%= f.hidden_field :question_id, value: @question.id %>
-          <%= button_tag type: 'submit', class: "fake-button", id: "register-button" do %>
-            &nbsp;<i class="fas fa-sort-up" aria-hidden="true"></i>
-          <% end %>
-           <% end %>
-          <br>
-    </div>
-    </div>
-    </div>
-    <p class="media-body mb-0 small lh-125 border-bottom border-info">
-    <%= @question.title %></a></strong>
-      <%= @question.body %>
-      <br>
-      <small class="text-muted text-center">questioned
-        <% if (Time.now - @question.updated_at).to_i < 60 %>
-          <%= (Time.now - @question.created_at).to_i %> sec. ago
-        <% elsif (Time.now - @question.updated_at).to_i < 3600 %>
-          <%= (Time.now - @question.created_at).to_i / 60 %> min. ago
-        <% elsif (Time.now - @question.updated_at).to_i < (3600 * 48) %>
-          <%= (Time.now - @question.created_at).to_i / 3600 %> hr. ago
-        <% else %>
-          <%= (Time.now - @question.updated_at).to_i / (3600 * 24) %> days ago
-        <% end %>
-        by <%= link_to User.find(@question.user_id).username, User.find(@question.user_id), :style => 'font-size:.75rem' %>
-      </small>
-    <div class="d-flex justify-content-center align-items-center flex-column align-center px-3">
-      <% if current_user && (current_user.id == @question.user_id || current_user.id == 1) %>
-        <%= link_to '<i class="fas fa-trash text-danger"></i>'.html_safe, @question, method: :delete, data: {confirm: 'Are you sure?'} %>
-        <br>
-        <%= link_to '<i class="fas fa-pen"></i>'.html_safe, edit_question_path(@question) %>
-      <% end %>
-    </div>
-    </p>
-  </div>
+
+<% if current_user %>
+    <%= form_with(url: questions_path, local: true) do |f| %>
+      <%= f.hidden_field :user_id, value: current_user.id %>
+      <%= f.hidden_field :question_id, value: @question.id %>
+      
+    <% end %>
+<% end %>
+<p class="media-body mb-0 small lh-125 border-bottom border-info">
+<%= @question.title %></a></strong>
+<%= @question.body %>
+<br>
+<small class="text-muted text-center">questioned
+<% if (Time.now - @question.updated_at).to_i < 60 %>
+<%= (Time.now - @question.created_at).to_i %> sec. ago
+<% elsif (Time.now - @question.updated_at).to_i < 3600 %>
+<%= (Time.now - @question.created_at).to_i / 60 %> min. ago
+<% elsif (Time.now - @question.updated_at).to_i < (3600 * 48) %>
+<%= (Time.now - @question.created_at).to_i / 3600 %> hr. ago
+<% else %>
+<%= (Time.now - @question.updated_at).to_i / (3600 * 24) %> days ago
+<% end %>
+by <%= link_to User.find(@question.user_id).username, User.find(@question.user_id), :style => 'font-size:.75rem' %>
+</small>
+<br>
+</div>
+</div>
+</div>
+<div class="d-flex justify-content-center align-items-center flex-column align-center px-3">
+<% if current_user && (current_user.id == @question.user_id || current_user.id == 1) %>
+<%= link_to '<i class="fas fa-trash text-danger"></i>'.html_safe, @question, method: :delete, data: {confirm: 'Are you sure?'} %>
+<br>
+<%= link_to '<i class="fas fa-pen"></i>'.html_safe, edit_question_path(@question) %>
+<% end %>
+</div>
+</p>
+</div>
 
 <h2 class='ml-3'>Answers</h2>
 
 <% if current_user %>
-  <%= form_with(url: answers_path, local: true, :html => {:class => 'form-row col-6 ml-3'}) do |form| %>
+    <%= form_with(model: @answer, url: answers_path, local: true, :html => {:class => 'form-row col-6 ml-3'}) do |form| %>
 
-    <div class="form-group mx-3 mb-2">
+      <div class="form-group mx-3 mb-2">
 
       <%= form.text_area :body, :class => 'form-control-lg' %>
-    </div>
+      </div>
 
-    <%= form.hidden_field :user_id, :value => current_user.id %>
-    <%= form.hidden_field :question_id, :value => @question.id %>
-<% if @question.image.attached? %>
-<p>
-  <strong>Tec Image:</strong>
-    <%= image_tag @attached.image %>
-</p>
+      <%= form.hidden_field :user_id, :value => current_user.id %>
+      <%= form.hidden_field :question_id, :value => @question.id %>
+
+      <% if @question.image.attached? %>
+        <p>
+        <strong>Tec Image:</strong>
+        <%= image_tag @attached.image %>
+        </p>
+      <% end %>
+      <div class="actions">
+        <%= form.submit :class => "btn btn-info btn-block" %>
+      </div>
+    <% end %>
+    
 <% end %>
-<% end %>
-    <div class="actions">
-      <%= form.submit :class => "btn btn-info btn-block" %>
-    </div>
