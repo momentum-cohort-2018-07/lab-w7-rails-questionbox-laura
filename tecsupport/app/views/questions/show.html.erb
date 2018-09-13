@@ -18,17 +18,22 @@
 <% end %>
 
 
-<%# <% if current_user %> %>
-    <%# <%= form_with(model: [@answers, @questions.answers.build], local: true, :html => {:class => 'form-row col-6 ml-3'}) do |form| %> %>
-
-          <%# <p class="media-body mb-0 small lh-125 border-bottom border-info">  %>
-          <%# <%= @answer.title %></a></strong>  
-          <%# <%= @question.body %>  
-    <%# <% end %>  
-<%# <% end %>  
 <p class="media-body mb-0 small lh-125 border-bottom border-info">
-<%= @question.title %></a></strong>
-<%= @question.body %>
+<div class="form-group">
+            <%= @question.id %>
+            <%= @question.title %>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <div class="input-group-text"></div>
+              </div>
+
+            <%= @question.body %>
+<div class="input-group">
+              <div class="input-group-prepend">
+                <div class="input-group-text"></div>
+              </div>
+              </div>
+              
 <br>
 <small class="text-muted text-center">questioned
 <% if (Time.now - @question.updated_at).to_i < 60 %>
@@ -56,28 +61,35 @@ by <%= link_to User.find(@question.user_id).username, User.find(@question.user_i
 </p>
 </div>
 
-<h2 class='ml-3'>Answers</h2>
-
-<% if current_user %>
-    <%= form_with(model: [@question, @question.answers.build], local: true, :html => {:class => 'form-row col-6 ml-3'}) do |form| %>
-
-      <div class="form-group mx-3 mb-2">
-
-      <%= form.text_area :body, :class => 'form-control-lg' %>
-      </div>
-
-      <%= form.hidden_field :user_id, :value => current_user.id %>
-      <%= form.hidden_field :question_id, :value => params[:id] %>
-
       <% if @question.image.attached? %>
         <p>
         <strong>Tec Image:</strong> </p>
         <td><%= image_tag(@question.image,{:style => "width:400px;margin-left:600px" 'align-items-center'}) %></td>
-       
-      <% end %>
-      <div class="actions">
-        <%= form.submit :class => "btn btn-info btn-block" %>
-      </div>
-    <% end %>
-    
+      <% end %>   
+
+      <h2>Add a Answer:</h2>
+      
+<%= form_with(model: [ @answer, @question.answers.build ], local: true) do |form| %>
+  <p>
+    <%= form.label :answer %><br>
+    <%= form.text_field :body %>
+  </p>
+  <p>
+    <%= form.hidden_field :user_id, :value => current_user.id %>
+  </p>
+  <p>
+    <%= form.submit %>
+  </p>
 <% end %>
+ <%# <% if current_user %> 
+
+    <%# <%= form_with([url: question/@question.id/answers], local: true) do |f|  %> %> %>
+     <%# <%= form_with(model: [@answer, @question.answers.build], local: true, :html => {:class => 'form-row col-6 ml-3'}) do |form| %> %> %>
+
+           <%# <p class="media-body mb-0 small lh-125 border-bottom border-info">  %> %>
+            <%# <%= @answer.title %></a></strong>   %> %>
+           <%# <%= @question.body %>   %> %>
+      <%# <% end %>   %>
+  <%# <% end %>    %>
+      
+   

@@ -10,7 +10,8 @@
            <div class="d-flex flex-column mx-5 h-100">
                <p class="media-body mb-0 border-bottom border-info">
                
-            <strong class="d-block text-gray-dark"><%= link_to question.title, question_answers_path(question)%></strong>
+
+            <strong class="d-block text-gray-dark"><%= link_to question.title, question_path(question)%></strong>
             <br>
             <small class="text-muted text-center"><%= question.body %>
               <% if (Time.now - question.updated_at).to_i < 60 %>
