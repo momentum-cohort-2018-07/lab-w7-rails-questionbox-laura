@@ -1,10 +1,10 @@
 Rails.application.routes.draw do
-  resources :questions
+  resources :questions do
   resources :answers
-
+  end
   resources :users
 
-  root 'question#index'
+  root 'questions#index'
   resource :session, only: [:new, :create, :destroy]
 
   resources :sessions, :users

@@ -1,6 +1,9 @@
 class AnswersController < ApplicationController
-    before_action :set_answer, only: [:show, :edit, :update, :destroy]
-  
+    before_action :set_answer, only: [ :show, :edit, :update, :destroy]
+    def index
+      # @questions = Question.all
+      @questions = Question.page(params[:page])
+    end
 
     def new 
       redirect_to questions_path, notice: 'You must be logged in to answer' if !(current_user)
@@ -9,8 +12,10 @@ class AnswersController < ApplicationController
     
     def create 
       @answer = Answer.new(answer_params) 
-      byebug
-      if @answer.save
+      @answer.valid = true
+      
+      if 
+        @answer.save
         redirect_to questions_path, notice: 'answer was successfully launched.'
       else
         redirect_to  questions_path, notice: 'answer not successfully launched.'
@@ -45,7 +50,7 @@ class AnswersController < ApplicationController
   end
   
   def answer_params
-    params.permit(:user_id, :body)
+    params.require(:answer).permit(:user_id, :body, :valid, :question_id)
   end
   
   end

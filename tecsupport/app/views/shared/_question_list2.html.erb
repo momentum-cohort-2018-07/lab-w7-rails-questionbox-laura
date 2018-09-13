@@ -3,14 +3,13 @@
     <div class="my-3 p-3 bg-light">
       <h6 class="border-bottom border-info pb-2 mb-0">Questions</h6>
       
-      <%= paginate @questions %> 
-      <%= page_entries_info @questions %> 
+      <%# remove page instructions %>
      
       <% questions.each do |question| %>
            <div class="d-flex flex-column mx-5 h-100">
                <p class="media-body mb-0 border-bottom border-info">
                
-            <strong class="d-block text-gray-dark"><%= link_to question.title, question_answers_path(question)%></strong>
+            <strong class="d-block text-gray-dark"><%= link_to question.title, question_path(question)%></strong>
             <br>
             <small class="text-muted text-center"><%= question.body %>
               <% if (Time.now - question.updated_at).to_i < 60 %>

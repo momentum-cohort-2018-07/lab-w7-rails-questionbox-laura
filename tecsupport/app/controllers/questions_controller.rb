@@ -20,7 +20,6 @@ class QuestionsController < ApplicationController
   # question /questions
   def create
     @question = Question.new(question_params)
-
     if @question.save
       redirect_to @question, notice: 'question was successfully recorded.'
     else
@@ -53,6 +52,6 @@ class QuestionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def question_params
-      params.require(:question).permit(:title, :body, :user_id)
+      params.require(:question).permit(:title, :body, :user_id, :image)
     end
 end

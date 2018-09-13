@@ -1,5 +1,5 @@
 <nav class="d-flex flex-column justify-content-centerjustify-content-lg-between flex-lg-row navbar fixed-top navbar-dark bg-info">
-  <%= link_to '', root_path, :class => 'navbar-brand' %>
+  <%= link_to "Home", root_path, :class => 'btn btn-outline-light' %>
   <div class="btn-group">
     <% if !current_user %>
       <%= link_to "Login", new_session_path, :class => 'btn btn-outline-light' %>
@@ -8,6 +8,7 @@
       <%= link_to 'New Question', new_question_path, :class => 'btn text-info btn-light' %>
       <%= link_to "Log Out", session_path, method: :delete, :class => 'btn btn-outline-light' %>
       <%= link_to current_user.username, current_user, :class => 'btn btn-outline-light' %>
+      
     <% end %>
   </div>
 </nav>
@@ -18,12 +19,13 @@
 
 
 <% if current_user %>
-    <%= form_with(url: questions_path, local: true) do |f| %>
-      <%= f.hidden_field :user_id, value: current_user.id %>
-      <%= f.hidden_field :question_id, value: @question.id %>
-      
-    <% end %>
-<% end %>
+    <%= form_with(model: [@answers, @question.answers.build], local: true, :html => {:class => 'form-row col-6 ml-3'}) do |form| %>
+
+          <p class="media-body mb-0 small lh-125 border-bottom border-info"> 
+          <%= @answer.title %></a></strong> 
+          <%= @question.body %> 
+    <% end %> 
+<% end %> 
 <p class="media-body mb-0 small lh-125 border-bottom border-info">
 <%= @question.title %></a></strong>
 <%= @question.body %>
@@ -57,7 +59,7 @@ by <%= link_to User.find(@question.user_id).username, User.find(@question.user_i
 <h2 class='ml-3'>Answers</h2>
 
 <% if current_user %>
-    <%= form_with(model: @answer, url: answers_path, local: true, :html => {:class => 'form-row col-6 ml-3'}) do |form| %>
+    <%= form_with(model: [@question, @question.answers.build], local: true, :html => {:class => 'form-row col-6 ml-3'}) do |form| %>
 
       <div class="form-group mx-3 mb-2">
 
@@ -65,13 +67,13 @@ by <%= link_to User.find(@question.user_id).username, User.find(@question.user_i
       </div>
 
       <%= form.hidden_field :user_id, :value => current_user.id %>
-      <%= form.hidden_field :question_id, :value => @question.id %>
+      <%= form.hidden_field :question_id, :value => params[:id] %>
 
       <% if @question.image.attached? %>
         <p>
-        <strong>Tec Image:</strong>
-        <%= image_tag @attached.image %>
-        </p>
+        <strong>Tec Image:</strong> </p>
+        <td><%= image_tag(@question.image,{:style => "width:400px;margin-left:600px" 'align-items-center'}) %></td>
+       
       <% end %>
       <div class="actions">
         <%= form.submit :class => "btn btn-info btn-block" %>
