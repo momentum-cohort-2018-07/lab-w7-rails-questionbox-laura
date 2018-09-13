@@ -1,9 +1,6 @@
 class AnswersController < ApplicationController
-    before_action :set_answer, only: [ :show, :edit, :update, :destroy]
-    def index
-      # @questions = Question.all
-      @questions = Question.page(params[:page])
-    end
+    before_action :set_answer, only: [:show, :edit, :update, :destroy]
+    
 
     def new 
       redirect_to questions_path, notice: 'You must be logged in to answer' if !(current_user)
