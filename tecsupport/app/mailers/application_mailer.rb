@@ -1,4 +1,8 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: 'from@example.com'
+  default from: 'laura.s.chavez@outlook.com'
+  def sample_email(user)
+    @user = user
+    mail(to: @user.email, subject: 'TecSupport')
+  end
   layout 'mailer'
 end

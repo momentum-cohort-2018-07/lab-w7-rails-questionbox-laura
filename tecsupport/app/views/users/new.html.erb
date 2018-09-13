@@ -14,7 +14,7 @@
       <div class="input-group-prepend">
         <div class="input-group-text"></div>
       </div>
-      <%= form.text_field :username, :class => "form-control", :placeholder => 'astronaut' %>
+      <%= form.text_field :username, :class => "form-control", :placeholder => 'example, Teddy' %>
     </div>
   </div>
 
@@ -27,7 +27,10 @@
     <%= form.label :password_confirmation, "Confirmation" %>
     <%= form.password_field :password_confirmation, class: 'form-control' %>
   </div>
-
+<div class="form-group">
+    <%= form.label :email, "e-mail" %>
+    <%= form.text_field :email, class: 'form-control' %>
+  </div>
 
   <%= form.submit "new account", :class => "btn btn-lg btn-info btn-block" %>
   <p class="mt-5 mb-3 text-muted"></p>

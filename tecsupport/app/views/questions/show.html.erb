@@ -67,29 +67,48 @@ by <%= link_to User.find(@question.user_id).username, User.find(@question.user_i
         <td><%= image_tag(@question.image,{:style => "width:400px;margin-left:600px" 'align-items-center'}) %></td>
       <% end %>   
 
-      <h2>Add a Answer:</h2>
-      
-<%= form_with(model: [ @answer, @question.answers.build ], local: true) do |form| %>
+<h2>Previous Answers</h2>
+<% @question.answers.each do |answer| %>
   <p>
-    <%= form.label :answer %><br>
-    <%= form.text_field :body %>
-  </p>
-  <p>
-    <%= form.hidden_field :user_id, :value => current_user.id %>
-  </p>
-  <p>
-    <%= form.submit %>
+    
+    <strong>Description</strong>
+    <%= answer.body %>
+    <div class="input-group">
+              <div class="input-group-prepend">
+                <div class="input-group-text"></div>
   </p>
 <% end %>
- <%# <% if current_user %> 
 
-    <%# <%= form_with([url: question/@question.id/answers], local: true) do |f|  %> %> %>
-     <%# <%= form_with(model: [@answer, @question.answers.build], local: true, :html => {:class => 'form-row col-6 ml-3'}) do |form| %> %> %>
 
-           <%# <p class="media-body mb-0 small lh-125 border-bottom border-info">  %> %>
-            <%# <%= @answer.title %></a></strong>   %> %>
-           <%# <%= @question.body %>   %> %>
-      <%# <% end %>   %>
-  <%# <% end %>    %>
+<div class="form-group">,
+       <h2>Add a Answer:</h2>
+      
+<% if current_user %>
+   <%= form_with(model: [@question, @question.answers.build ], local: true, :html => {:class => 'form-row col-6 ml-3'}) do |form| %>
+ 
+     <div class="form-group mx-3 mb-2">
+       <%= form.label :description %><br> 
+       <%= form.text_area :body, :class => 'form-control-lg' %>
+       <div class="input-group">
+              <div class="input-group-prepend">
+                <div class="input-group-text"></div>
+              </div>
+     </div>
+     <%= form.hidden_field :user_id, :value => current_user.id %>
+    <%= form.hidden_field :question_id, :value => @question.id %>
+     
+  
+        <% if current_user %>
+         <div class="form-group">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <div class="input-group-text"></div>
+              </div> 
+          <%= submit_tag "Submit", :class => "btn btn-lg btn-info btn-block" %>
+        <% end %> 
+<% end %>
+  <% end %> 
+
+   
       
    
