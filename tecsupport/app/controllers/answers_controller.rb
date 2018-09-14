@@ -34,8 +34,6 @@ class AnswersController < ApplicationController
     end  
   
     def update 
-      # chris:-------------
-      def update
         respond_to do |format|
           if (answer_params[:question_validate_id] != nil && Answer.exists?(question_id: answer_params[:question_id]))
             format.html {redirect_to @answer.question}
@@ -47,9 +45,6 @@ class AnswersController < ApplicationController
             end
           end
         end
-      end
-      # -----------
-      
     end
   
     def destroy 
