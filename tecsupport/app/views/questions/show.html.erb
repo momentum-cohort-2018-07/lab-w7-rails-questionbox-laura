@@ -70,13 +70,16 @@ by <%= link_to User.find(@question.user_id).username, User.find(@question.user_i
 <h2>Previous Answers</h2>
 <% @question.answers.each do |answer| %>
   <p>
+  <%# <%if answer.valid = 'true'%> %>
     
-    <strong>Description</strong>
+    <strong>Description: </strong>
     <%= answer.body %>
+    <br>
     <div class="input-group">
               <div class="input-group-prepend">
                 <div class="input-group-text"></div>
   </p>
+  <%# <% end %> %>
 <% end %>
 
 

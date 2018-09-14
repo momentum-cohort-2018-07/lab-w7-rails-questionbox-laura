@@ -1,16 +1,19 @@
 class AnswersController < ApplicationController
-  before_action :set_question, :set_answer, only: [:show, :edit, :update, :destroy]
-  
-
+  before_action :set_answer, only: [:show, :update, :destroy]
+  before_action :set_question, only: [:show, :update, :destroy]
    
+  def index
+    @question = Question.find(params[:question_id])
+  end
   def new 
     redirect_to questions_path, notice: 'You must be logged in to comment' if !(current_user)
     @answer = Answer.new 
   end 
   
   def create 
+    
     @answer = Answer.new(answer_params) 
-
+    @answer.valid = false
     if @answer.save
       question_id = @answer.question_id
       user_id = ''
@@ -26,16 +29,27 @@ class AnswersController < ApplicationController
   end
   
     def edit 
-      redirect_to posts_path
+      # @answer = Answer.find(params[:id])
+      # @question
     end  
   
     def update 
-  
-      if @answer.update(answer_params)
-        redirect_to questions_path, notice: 'answer was successfully updated.'
-      else
-        render :edit
+      # chris:-------------
+      def update
+        respond_to do |format|
+          if (answer_params[:question_validate_id] != nil && Answer.exists?(question_id: answer_params[:question_id]))
+            format.html {redirect_to @answer.question}
+          else
+            if @answer.update({question_validate_id: nil}.merge(answer_params))
+              format.html {redirect_to @answer.question, notice: 'Answer was successfully updated.'}
+            else
+              format.html {redirect_to @answer.question}
+            end
+          end
+        end
       end
+      # -----------
+      
     end
   
     def destroy 
@@ -49,11 +63,13 @@ class AnswersController < ApplicationController
   private 
   
   def set_answer
+    
     @answer = answer.find(params[:id])
+
   end
   
   def answer_params
-    params.require(:answer).permit(:user_id, :body, :question_id)
+    params.require(:answer).permit(:user_id, :body, :question_id, :valid)
   end
   
   end
