@@ -29,11 +29,7 @@ class QuestionsController < ApplicationController
 
   # PATCH/PUT /questions/1
   def update
-    if @question.update(question_params)
-      redirect_to @question, notice: 'question was successfully updated.'
-    else
-      render :edit
-    end
+   
   end
 
   # DELETE /questions/1

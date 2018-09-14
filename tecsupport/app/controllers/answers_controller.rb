@@ -1,5 +1,5 @@
 class AnswersController < ApplicationController
-  before_action :set_answer, only: [:show, :edit, :update, :destroy]
+  before_action :set_question, :set_answer, only: [:show, :edit, :update, :destroy]
   
 
    
@@ -12,6 +12,13 @@ class AnswersController < ApplicationController
     @answer = Answer.new(answer_params) 
 
     if @answer.save
+      question_id = @answer.question_id
+      user_id = ''
+      email=''
+       @question = Question.find_by("id = ?", question_id)
+       user_id=@question.user_id  
+      @user2 = User.find_by("id = ?", user_id)
+      UserMailer.newanswer(@user2).deliver_now
       redirect_to questions_path, notice: 'Answer was successfully launched.'
     else
       render :new 

@@ -5,13 +5,22 @@ class UserMailer < ApplicationMailer
   #
   #   en.user_mailer.signup.subject
   #
-  def signup(user)
+  def newanswer(user)
     @user = user
-    @greeting = "Thanks for signing up! Your email address is #{@user.email}."
-
+    @greeting = "You have a new answare in TecSupport! Your email address is #{@user.email}."
     mail(
       to: @user.email,
-      from: 'amy@momentumlearn.com',
+      from: 'laura.s.chavez@outlook.com',
+      subject: 'New answer to this app!'
+    )
+  end
+    def signup(user)
+      @user = user
+     
+      @greeting = "thank you for suscribe to TecSupport! Your email address is #{@user.email}."
+      mail(
+      to: @user.email,
+      from: 'laura.s.chavez@outlook.com',
       subject: 'Welcome to this app!'
     )
   end
