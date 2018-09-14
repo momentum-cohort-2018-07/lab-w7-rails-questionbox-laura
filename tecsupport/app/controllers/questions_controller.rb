@@ -34,10 +34,17 @@ class QuestionsController < ApplicationController
 
   # DELETE /questions/1
   def destroy
+    if current_user == @question.user_id
     @question.destroy
     respond_to do |format|
       format.html { redirect_to questions_url, notice: 'question was successfully destructed.' }
     end
+  else
+    respond_to do |format|
+    format.html { redirect_to questions_url, notice: 'You are not allow to delete the question.' }
+  end
+end
+
   end
 
   private
